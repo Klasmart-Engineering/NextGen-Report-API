@@ -1,26 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { CreateParentReportDto } from './dto/create-parent-report.dto';
-import { UpdateParentReportDto } from './dto/update-parent-report.dto';
-
+import { AssignmentsDto } from './dto/assignments.dto';
+import { LiveClassesDto } from './dto/live-classes.dto';
+import { OutcomesDto } from './dto/outcomes.dto';
 @Injectable()
 export class ParentReportsService {
-  create(createParentReportDto: CreateParentReportDto) {
-    return 'This action adds a new parentReport';
+  liveClasses(liveClassesDto: LiveClassesDto) {
+    return `This action adds a new parentReport ${liveClassesDto.classId}`;
   }
 
-  findAll() {
-    return `This action returns all parentReports`;
+  classAttendance(orgId: string) {
+    return `This action returns all parentReports ${orgId}`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} parentReport`;
+  assignments(assignmentsDto: AssignmentsDto) {
+    return `This action returns a #${assignmentsDto.year} parentReport`;
   }
 
-  update(id: number, updateParentReportDto: UpdateParentReportDto) {
-    return `This action updates a #${id} parentReport`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} parentReport`;
+  outcomes(outcomesDto: OutcomesDto) {
+    return `This action updates a #${outcomesDto.assessmentId} parentReport`;
   }
 }

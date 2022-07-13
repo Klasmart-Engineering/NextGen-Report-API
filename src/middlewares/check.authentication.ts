@@ -6,7 +6,6 @@ export function checkAuthentication(
   res: Response,
   next: NextFunction,
 ) {
-  console.log(req.path);
   if (req.path.startsWith('/app/test') || req.path.startsWith('/api'))
     return next();
   if (res.locals.authenticated && res.locals.token) {

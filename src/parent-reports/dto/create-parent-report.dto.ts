@@ -6,5 +6,4 @@ export class CreateParentReportDto {
 
   @IsNotEmpty()
   readonly password: string;
-
 }

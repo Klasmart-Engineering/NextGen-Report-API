@@ -5,17 +5,17 @@ import { Response } from 'express';
 import { TransformInterceptor } from './interceptors/response.interceptor';
 const log = withLogger('my-module');
 
-@Controller("/app")
+@Controller('/app')
 export class AppController {
-  constructor(private readonly appService: AppService) { }
+  constructor(private readonly appService: AppService) {}
 
-  @Get("/test")
-  getHello(@Res({passthrough:true}) response: Response): string {
-    log.warn("tesint");
+  @Get('/test')
+  getHello(@Res({ passthrough: true }) response: Response): string {
+    log.warn('tesint');
     if (response.locals.authenticated) {
       log.warn('authenticated');
     } else {
-      log.warn('not authenticated'+' '+response.locals.token);
+      log.warn('not authenticated' + ' ' + response.locals.token);
     }
     return this.appService.getHello();
   }

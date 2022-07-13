@@ -6,41 +6,48 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
+  Res,
 } from '@nestjs/common';
 import { ParentReportsService } from './parent-reports.service';
-import { CreateParentReportDto } from './dto/create-parent-report.dto';
-import { UpdateParentReportDto } from './dto/update-parent-report.dto';
 import { LiveClassesDto } from './dto/live-classes.dto';
+import { AssignmentsDto } from './dto/assignments.dto';
+import { OutcomesDto } from './dto/outcomes.dto';
+import { Response } from 'express';
 
 @Controller('parent-reports')
 export class ParentReportsController {
   constructor(private readonly parentReportsService: ParentReportsService) {}
 
-  @Get()
-  liveClasses(@Body() liveClassesDto: LiveClassesDto) {
-    return "Hiiiii"; //this.parentReportsService.create(createParentReportDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.parentReportsService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.parentReportsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateParentReportDto: UpdateParentReportDto,
+  @Get('live-classes')
+  liveClasses(
+    @Query() liveClassesDto: LiveClassesDto,
+    @Res({ passthrough: true }) response: Response,
   ) {
-    return this.parentReportsService.update(+id, updateParentReportDto);
+    return this.parentReportsService.liveClasses(liveClassesDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.parentReportsService.remove(+id);
+  @Get('class-attendance/:orgId')
+  classAttendance(
+    @Param('orgId') orgId: string,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    return this.parentReportsService.classAttendance(orgId);
+  }
+
+  @Get('assignments')
+  assignments(
+    @Query() assignmentsDto: AssignmentsDto,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    return this.parentReportsService.assignments(assignmentsDto);
+  }
+
+  @Get('outcomes')
+  outcomes(
+    @Query() outcomesDto: OutcomesDto,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    return this.parentReportsService.outcomes(outcomesDto);
   }
 }

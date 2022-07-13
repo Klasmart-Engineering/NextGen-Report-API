@@ -6,16 +6,21 @@ import helmet from 'helmet';
 import { checkAuthentication } from './middlewares/check.authentication';
 import { TransformInterceptor } from './interceptors/response.interceptor';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { ValidationPipe } from '@nestjs/common';
+import { BadRequestException, ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(helmet());
   app.use(cookieParser());
-  app.useGlobalInterceptors(new TransformInterceptor());
+  //app.useGlobalInterceptors(new TransformInterceptor());
   app.use(kidsloopAuthMiddleware());
   app.use(checkAuthentication);
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      exceptionFactory: (errors) => new BadRequestException(errors),
+      transform: true,
+    }),
+  );
 
   const config = new DocumentBuilder()
     .setTitle('Next-gen-reports')
